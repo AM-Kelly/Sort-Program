@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <conio.h>
 #include <string>
+#include <iterator>
 using namespace std;
 
 void readin();
@@ -11,18 +12,22 @@ void writeout();
 
 void readin()
 {
+	ifstream thefile1("numbers.txt");
+	thefile1.unsetf(std::ios_base::skipws);
+	// count the newlines with an algorithm specialized for counting:
+	unsigned line_count = std::count(
+		std::istream_iterator<char>(thefile1),
+		std::istream_iterator<char>(),
+		'\n');
+	cout << line_count << '\n';
 
 	int* a = NULL;   // Pointer to int, initialize to nothing.
 	int n;           // Size needed for array
-	cin >> n;        // Read in the size
+	n = line_count;        // Read in the size
 	a = new int[n];  // Allocate n ints and save ptr in a.
 	for (int i = 0; i<n; i++) {
 		a[i] = 0;    // Initialize all elements to zero.
 	}
-
-
-
-
 
 
 
