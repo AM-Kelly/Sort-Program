@@ -11,8 +11,23 @@ void writeout();
 
 void readin()
 {
+
+	int* a = NULL;   // Pointer to int, initialize to nothing.
+	int n;           // Size needed for array
+	cin >> n;        // Read in the size
+	a = new int[n];  // Allocate n ints and save ptr in a.
+	for (int i = 0; i<n; i++) {
+		a[i] = 0;    // Initialize all elements to zero.
+	}
+
+
+
+
+
+
+
 	string line;
-	ifstream thefile("example.txt");
+	ifstream thefile("numbers.txt");
 	if (thefile.is_open())
 	{
 		while (getline(thefile, line))
