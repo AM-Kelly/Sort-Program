@@ -39,9 +39,10 @@ void readin()
 	{
 		while (getline(thefile, line))
 		{
-			a[i] = stoi(line);
-			cout << a[i] << '\n';
-			i++;
+			//a[i] = stoi(line);
+			//cout << a[i] << '\n';
+			//i++;
+			cout << line << '\n';
 		}
 		thefile.close();
 	}
