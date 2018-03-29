@@ -35,9 +35,12 @@ void readin()
 	ifstream thefile("numbers.txt");
 	if (thefile.is_open())
 	{
+		int i = 0;
 		while (getline(thefile, line))
 		{
+			a[i] = atoi(line.c_str());
 			cout << line << '\n';
+			i++;
 		}
 		thefile.close();
 	}
