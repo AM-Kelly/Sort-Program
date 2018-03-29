@@ -20,8 +20,8 @@ void readin()
 
 	//*******************Text File Declaration************************
 	ifstream thefile("numbers.txt");
-	thefile.unsetf(std::ios_base::skipws);
-	unsigned line_count = std::count(std::istream_iterator<char>(thefile), std::istream_iterator<char>(), '\n');//Counts the number of lines in the file
+	thefile.unsetf(ios_base::skipws);
+	unsigned line_count = count(istream_iterator<char>(thefile), istream_iterator<char>(), '\n');//Counts the number of lines in the file
 	n = line_count;//sets the number of placeholders required
 	//*******************Text File Declaration************************
 
@@ -39,7 +39,7 @@ void readin()
 	{
 		while (getline(thefile, line))
 		{
-			a[i] = std::stoi(line);
+			a[i] = stoi(line);
 			cout << a[i] << '\n';
 			i++;
 		}
