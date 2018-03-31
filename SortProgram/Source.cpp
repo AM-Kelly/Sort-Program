@@ -4,6 +4,7 @@
 #include <conio.h>
 #include <string>
 #include <iterator>
+#include <vector>
 using namespace std;
 
 void readin();
@@ -64,7 +65,22 @@ void bubbleSort::printArray(int arr[], int size)// Function to print an array
 	for (i = 0; i < size; i++)
 		printf("%d ", arr[i]);
 }
-void readin()
+
+class textFileRead//Change the void --> Ints. Passing values back up through.
+{
+public:
+	void textFileReadDriver();//Driver function declaration
+
+private:
+	std::vector<int> readIn();//Read in from file function declaration
+};
+
+void textFileRead::textFileReadDriver()//Driver function
+{
+	readIn();//Start the readIn function (private)
+}
+
+std::vector<int> textFileRead::readIn()
 {
 	ifstream thefile1("numbers.txt");//Textfile declaration
 	thefile1.unsetf(std::ios_base::skipws);//Skip new lines
@@ -83,7 +99,7 @@ void readin()
 		a[i] = 0;    // Initialize all elements to zero.
 	}
 
-
+	std::vector<int> arr(line_count + 1);//+1 To get to the right number
 
 	string line;//declare line 
 	ifstream thefile("numbers.txt");//Declare the txt file to read in from
@@ -92,15 +108,17 @@ void readin()
 		int i = 0;//Counter set to zero
 		while (getline(thefile, line))
 		{
-			a[i] = atoi(line.c_str());//put the conversion of line into --> a[i]
+			//a[i] = atoi(line.c_str());//put the conversion of line into --> a[i]
+			arr[i] = atoi(line.c_str());//put the conversion of line into --> a[i]
 			cout << line << '\n';//Print out the line as a check
+			cout << arr[i] << '\n';//Print out the vector as a check
 			i++;//increment the counter
 		}
 		thefile.close();//Close the file
 	}
-	_getch();//wait
-	//TODO: For making this into a full read in function, it should return the array so the sort can process the data
-}
+	return arr;
+}//read in from file function
+
 void writeoutfile()
 {
 	ofstream thefile;
@@ -109,6 +127,7 @@ void writeoutfile()
 	thefile.close();
 	_getch();
 }
+
 int main()
 {
 	int userchoice;
@@ -121,7 +140,10 @@ int main()
 		sort.bubbleSortDriver();
 		break;
 	case 2 ://Selection 
-		
+		textFileRead read;//test
+		read.textFileReadDriver();//test
+		_getch();
+		break;
 	case 3://Insertion
 		
 		break;
