@@ -22,12 +22,11 @@ private:
 
 void bubbleSort::bubbleSortDriver(std::vector<int> arr)//Driver
 {
-	std:vector<int> newArr = arr;
-	int x = arr.size();
-	//Clear arr
-	arr = sort(newArr, x);//Need an vector arr returned here
+std:vector<int> sortedArr;//Declare a new vector array for holding the sorted data
+	int x = arr.size();//get the size of the passed vector array
+	sortedArr = sort(arr, x);//Sort using the passed vector array
 	printf("Sorted array: \n");
-	printArray(arr, x);//use the returned vector arr here
+	printArray(sortedArr, x);//Print the sorted vector array
 	_getch();
 }
 void bubbleSort::swap(int *xp, int *yp)//Swaps ints around for the sort
@@ -91,7 +90,7 @@ std::vector<int> textFileRead::readIn()
 		std::istream_iterator<char>(thefile1),
 		std::istream_iterator<char>(),
 		'\n');
-	cout << line_count << '\n';//Print out the number of lines starting from 0
+	cout << "There are " << line_count + 1 << " numbers to sort.\n";//Print out the number of lines starting from 0
 
 
 	std::vector<int> arr(line_count + 1);//+1 To get to the right number
