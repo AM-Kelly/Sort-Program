@@ -5,6 +5,7 @@
 #include <string>
 #include <iterator>
 #include <vector>
+#include <math.h>
 using namespace std;
 
 void writeoutfile();
@@ -32,6 +33,65 @@ void print::printArray(std::vector<int> sortedArr, int size)
 		printf("%d ", sortedArr[i]);
 }
 //Print End
+
+class quickSort
+{
+public:
+	std::vector<int> quickSortDriver(std::vector<int>);
+	
+
+private:
+	void swap(int* a, int* b);
+	int partition(std::vector<int>, int, int);
+	std::vector<int> sort(std::vector<int>, int, int);
+};
+
+std::vector<int> quickSort::quickSortDriver(std::vector<int> arr)
+{
+	std::vector<int> sortedArr;
+	int x = arr.size();
+	sortedArr = sort(arr, x);
+	return sortedArr;
+}
+void quickSort::swap(int* a, int* b)
+{
+	int t = *a;
+	*a = *b;
+	*b = t;
+}
+int quickSort::partition(std::vector<int> arr, int low, int high)
+{
+	int pivot = arr[high];    // pivot
+    int i = (low - 1);  // Index of smaller element
+ 
+    for (int j = low; j <= high- 1; j++)
+    {
+        // If current element is smaller than or
+        // equal to pivot
+        if (arr[j] <= pivot)
+        {
+            i++;    // increment index of smaller element
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+std::vector<int> quickSort::sort(std::vector<int> arr, int low, int high)
+{
+	if (low < high)
+    {
+        /* pi is partitioning index, arr[p] is now
+           at right place */
+        int pi = partition(arr, low, high);
+ 
+        // Separately sort elements before
+        // partition and after partition
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+	return arr;
+}
 
 //Insertion
 class insertionSort
@@ -72,6 +132,49 @@ std::vector<int> insertionSort::sort(std::vector<int> arr, int n)
 	return arr;
 }
 //Insertion End
+
+//Selection 
+class selectionSort
+{
+public:
+	std::vector<int> selectionSortDriver(std::vector<int>);
+private:
+	std::vector<int> sort(std::vector<int>, int);
+	void swap(int *xp, int *yp);
+};
+
+std::vector<int> selectionSort::selectionSortDriver(std::vector<int> arr)
+{
+	std::vector<int> sortedArr;
+	int x = arr.size();
+	sortedArr = sort(arr, x);
+	return sortedArr;
+}
+void selectionSort::swap(int *xp, int *yp)//Swaps ints around for the sort
+{
+	int temp = *xp;
+	*xp = *yp;
+	*yp = temp;
+}
+std::vector<int> selectionSort::sort(std::vector<int> arr, int n)
+{
+	int i, j, min_idx;
+
+	// One by one move boundary of unsorted subarray
+	for (i = 0; i < n - 1; i++)
+	{
+		// Find the minimum element in unsorted array
+		min_idx = i;
+		for (j = i + 1; j < n; j++)
+			if (arr[j] < arr[min_idx])
+				min_idx = j;
+
+		// Swap the found minimum element with the first element
+		swap(&arr[min_idx], &arr[i]);
+	}
+	return arr;
+}
+//Selection End
 
 //BubbleSort
 class bubbleSort
@@ -204,7 +307,11 @@ int main()
 		_getch();
 		break;
 	case 2 ://Selection 
-
+		selectionSort sSort;
+		sortedArr = sSort.selectionSortDriver(arr);
+		print sPrint;
+		sPrint.printDriver(sortedArr);
+		_getch();
 		break;
 	case 3://Insertion
 		insertionSort iSort;
