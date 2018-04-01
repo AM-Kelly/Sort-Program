@@ -16,34 +16,21 @@ public:
 
 private:
 	void swap(int *xp, int *yp);//This swaps ints around for the sort
-	void sort(int arr[], int n);//This sorts the ints
-	void printArray(int arr[], int size);//This prints the sorted array out
+	std::vector<int> sort(std::vector<int> arr, int n);//This sorts the ints
+	void printArray(std::vector<int> arr, int size);//This prints the sorted array out
 };
 
 void bubbleSort::bubbleSortDriver(std::vector<int> arr3)//Driver
 {
-	//int arr[] = { 64, 34, 25, 12, 22, 11, 90 };//This needs to be changed to the array that has been loaded from the textfile
-	
-	//*****************SOMETHING WRONG IN HERE********************
-	int* arr4 = NULL;   // Pointer to int, initialize to nothing.
 	int z;           // Size needed for array
 	z = arr3.size();        // allocate the size of the array
-	arr4 = new int[z];  // Allocate n ints and save ptr in a.
-	for (int i = 0; i<z; i++) {
-		arr4[i] = 0;    // Initialize all elements to zero.
-	}
-	int i = 0;//Counter set to zero
-	while (i < z)
-	{
-		arr4[i] = arr3[i];
-		i++;//increment the counter
-	}
-	//*****************SOMETHING WRONG IN HERE********************
-	//std:vector<int> arr4 = arr3;
+	std:vector<int> arr4 = arr3;
 	int n = sizeof(arr4) / sizeof(arr4[0]);
-	sort(arr4, n);
+	int x = arr4.size();
+	std::vector<int> arr5;
+	arr5 = sort(arr4, x);//Need an vector arr returned here
 	printf("Sorted array: \n");
-	printArray(arr4, n);
+	printArray(arr5, x);//use the returned vector arr here
 	_getch();
 }
 void bubbleSort::swap(int *xp, int *yp)//Swaps ints around for the sort
@@ -53,7 +40,7 @@ void bubbleSort::swap(int *xp, int *yp)//Swaps ints around for the sort
 	*yp = temp;
 }
 
-void bubbleSort::sort(int arr[], int n)// An optimized version of Bubble Sort
+std::vector<int> bubbleSort::sort(std::vector<int> arr, int n)// An optimized version of Bubble Sort
 {
 	int i, j;
 	bool swapped;
@@ -73,9 +60,10 @@ void bubbleSort::sort(int arr[], int n)// An optimized version of Bubble Sort
 		if (swapped == false)
 			break;
 	}
+	return arr;
 }
 
-void bubbleSort::printArray(int arr[], int size)// Function to print an array
+void bubbleSort::printArray(std::vector<int> arr, int size)// Function to print an array
 {
 	int i;
 	for (i = 0; i < size; i++)
