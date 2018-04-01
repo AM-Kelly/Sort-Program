@@ -22,28 +22,53 @@ private:
 
 void bubbleSort::bubbleSortDriver(std::vector<int> arr3)//Driver
 {
-	//int arr[] = { 64, 34, 25, 12, 22, 11, 90 };//This needs to be changed to the array that has been loaded from the textfile
-	
-	//*****************SOMETHING WRONG IN HERE********************
-	int* arr4 = NULL;   // Pointer to int, initialize to nothing.
+	int max = 10;           // no longer const
+	int* a = new int[max];  // allocated on heap
+	int n1 = 0;
 	int z;           // Size needed for array
 	z = arr3.size();        // allocate the size of the array
-	arr4 = new int[z];  // Allocate n ints and save ptr in a.
-	for (int i = 0; i<z; i++) {
-		arr4[i] = 0;    // Initialize all elements to zero.
+	//--- Read into the array
+	while (n1 < z) {//my two arrays
+		n1++;
+		if (n1 >= max) {
+			max = max * 2;            // double the previous size
+			int* temp = new int[max]; // create new bigger array.
+			for (int i = 0; i<n1; i++) {
+				temp[i] = a[i];       // copy values to new array.
+									  //cout << temp[i];
+			}
+			delete[] a;              // free old array memory.
+			a = temp;                 // now a points to new array.
+			for (int i = 0; i<n1; i++) {
+				a[i] = arr3[i];
+				//cout << a[i];
+				//i++;
+				//At this point it is not sorted
+				//So what needs to be passed
+			}
+		}
 	}
-	int i = 0;//Counter set to zero
+
+	//*****************Commented out code is for dynamic array********************
+	//int* arr4 = NULL;   // Pointer to int, initialize to nothing.
+	//int z;           // Size needed for array
+	//z = arr3.size();        // allocate the size of the array
+	//arr4 = new int[z];  // Allocate n ints and save ptr in a.*/
+	//int arr4[1000];
+	/*for (int i = 0; i<z; i++) {
+		arr4[i] = 0;    // Initialize all elements to zero.
+	}*/
+	/*int i = 0;//Counter set to zero
 	while (i < z)
 	{
 		arr4[i] = arr3[i];
 		i++;//increment the counter
-	}
-	//*****************SOMETHING WRONG IN HERE********************
-	//std:vector<int> arr4 = arr3;
-	int n = sizeof(arr4) / sizeof(arr4[0]);
-	sort(arr4, n);
+	}*/
+	//*****************Commented out code is for dynamic array********************
+	int n = sizeof(a) / sizeof(a);
+	sort(a, n);
 	printf("Sorted array: \n");
-	printArray(arr4, n);
+	printArray(a, n);
 	_getch();
 }
 void bubbleSort::swap(int *xp, int *yp)//Swaps ints around for the sort
