@@ -8,27 +8,91 @@
 using namespace std;
 
 void writeoutfile();
+//Print 
+class print
+{
+public:
+	void printDriver(std::vector<int>);
+
+private:
+	void printArray(std::vector<int>, int);//This prints the sorted array out
+};
+
+void print::printDriver(std::vector<int> sortedArr)
+{
+	int x = sortedArr.size();
+	printf("Sorted array: \n");
+	printArray(sortedArr, x);//Print the sorted vector array
+}
+
+void print::printArray(std::vector<int> sortedArr, int size)
+{
+	int i;
+	for (i = 0; i < size; i++)
+		printf("%d ", sortedArr[i]);
+}
+//Print End
+
+//Insertion
+class insertionSort
+{
+public:
+	std::vector<int> insertionSortDriver(std::vector<int>);
+
+private:
+	std::vector<int> sort(std::vector<int>, int);
+};
+
+std::vector<int> insertionSort::insertionSortDriver(std::vector<int> arr)
+{
+	std::vector<int> sortedArr;
+	int x = arr.size();
+	sortedArr = sort(arr, x);
+	return sortedArr;
+}
+
+std::vector<int> insertionSort::sort(std::vector<int> arr, int n)
+{
+	int i, key, j;
+	for (i = 1; i < n; i++)
+	{
+		key = arr[i];
+		j = i - 1;
+
+		/* Move elements of arr[0..i-1], that are
+		greater than key, to one position ahead
+		of their current position */
+		while (j >= 0 && arr[j] > key)
+		{
+			arr[j + 1] = arr[j];
+			j = j - 1;
+		}
+		arr[j + 1] = key;
+	}
+	return arr;
+}
+//Insertion End
+
 //BubbleSort
 class bubbleSort
 {
 public:
-	void bubbleSortDriver(std::vector<int> arr3);
+	std::vector<int> bubbleSortDriver(std::vector<int>);
 
 private:
 	void swap(int *xp, int *yp);//This swaps ints around for the sort
-	std::vector<int> sort(std::vector<int> arr, int n);//This sorts the ints
-	void printArray(std::vector<int> arr, int size);//This prints the sorted array out
+	std::vector<int> sort(std::vector<int>, int);//This sorts the ints
 };
 
-void bubbleSort::bubbleSortDriver(std::vector<int> arr)//Driver
+std::vector<int> bubbleSort::bubbleSortDriver(std::vector<int> arr)//Driver
 {
 std:vector<int> sortedArr;//Declare a new vector array for holding the sorted data
 	int x = arr.size();//get the size of the passed vector array
 	sortedArr = sort(arr, x);//Sort using the passed vector array
-	printf("Sorted array: \n");
-	printArray(sortedArr, x);//Print the sorted vector array
+	return sortedArr;
 	_getch();
 }
+
 void bubbleSort::swap(int *xp, int *yp)//Swaps ints around for the sort
 {
 	int temp = *xp;
@@ -58,14 +122,9 @@ std::vector<int> bubbleSort::sort(std::vector<int> arr, int n)// An optimized ve
 	}
 	return arr;
 }
+//BubbleSort End
 
-void bubbleSort::printArray(std::vector<int> arr, int size)// Function to print an array
-{
-	int i;
-	for (i = 0; i < size; i++)
-		printf("%d ", arr[i]);
-}
-
+//TextFileRead
 class textFileRead//Change the void --> Ints. Passing values back up through.
 {
 public:
@@ -113,6 +172,7 @@ std::vector<int> textFileRead::readIn()
 	//Put in a output saying the file has been read 
 	return arr;//First vector array being returned (from the textfile)
 }//read in from file function
+//TextFileReadEnd
 
 void writeoutfile()
 {
@@ -125,24 +185,33 @@ void writeoutfile()
 
 int main()
 {
-	std::vector<int> arr;
+	std::vector<int> arr;//Unsorted
+	std::vector<int> sortedArr;
+
+	textFileRead read;//Could put an if statement around this to stop loading arr all the time?
+	arr = read.textFileReadDriver();//Get the unsorted values from the textfile & assign them to the vector array
+
 	int userchoice;
 	cout << "How would you like to sort these numbers?\n1.) Bubble.\n2.) Selection.\n3.) Insertion\n4.) Hash\n5.) Binary\n";
 	cin >> userchoice;
 	switch (userchoice)
 	{
 	case 1 ://Bubble
-		textFileRead read;//Get the values from the textfile
-		arr = read.textFileReadDriver();//Assign the returned values to the vector array
-		bubbleSort sort;
-		sort.bubbleSortDriver(arr);//Start the bubble sort passing vector array
+		bubbleSort bSort;
+		sortedArr = bSort.bubbleSortDriver(arr);//Start the bubble sort passing unsorted vector array
+		print bPrint;
+		bPrint.printDriver(sortedArr);//Start the print class passing the sorted vector array
 		_getch();
 		break;
 	case 2 ://Selection 
 
 		break;
 	case 3://Insertion
-		
+		insertionSort iSort;
+		sortedArr = iSort.insertionSortDriver(arr);//Start the insertion sort passing unsorted vector array
+		print iPrint;
+		iPrint.printDriver(sortedArr);//Start the print class passing the sorted vector array
+		_getch();
 		break;
 	case 4://Hash
 		
