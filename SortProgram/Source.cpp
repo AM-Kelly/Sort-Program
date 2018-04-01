@@ -20,17 +20,14 @@ private:
 	void printArray(std::vector<int> arr, int size);//This prints the sorted array out
 };
 
-void bubbleSort::bubbleSortDriver(std::vector<int> arr3)//Driver
+void bubbleSort::bubbleSortDriver(std::vector<int> arr)//Driver
 {
-	int z;           // Size needed for array
-	z = arr3.size();        // allocate the size of the array
-	std:vector<int> arr4 = arr3;
-	int n = sizeof(arr4) / sizeof(arr4[0]);
-	int x = arr4.size();
-	std::vector<int> arr5;
-	arr5 = sort(arr4, x);//Need an vector arr returned here
+	std:vector<int> newArr = arr;
+	int x = arr.size();
+	//Clear arr
+	arr = sort(newArr, x);//Need an vector arr returned here
 	printf("Sorted array: \n");
-	printArray(arr5, x);//use the returned vector arr here
+	printArray(arr, x);//use the returned vector arr here
 	_getch();
 }
 void bubbleSort::swap(int *xp, int *yp)//Swaps ints around for the sort
@@ -81,8 +78,8 @@ private:
 
 std::vector<int> textFileRead::textFileReadDriver()//Driver function //To be called
 {
-	std::vector<int> arr1 =	readIn();//Start the readIn function (private)
-	return arr1;
+	std::vector<int> arr =	readIn();//Start the readIn function (private)
+	return arr;//second vector array being returned (from the textfile --> main)
 }
 
 std::vector<int> textFileRead::readIn()
@@ -108,13 +105,14 @@ std::vector<int> textFileRead::readIn()
 		{
 			//a[i] = atoi(line.c_str());//put the conversion of line into --> a[i]
 			arr[i] = atoi(line.c_str());//put the conversion of line into --> a[i]
-			cout << line << '\n';//Print out the line as a check
-			cout << arr[i] << '\n';//Print out the vector as a check
+			//cout << line << '\n';//Print out the line as a check
+			//cout << arr[i] << '\n';//Print out the vector as a check
 			i++;//increment the counter
 		}
 		thefile.close();//Close the file
 	}
-	return arr;
+	//Put in a output saying the file has been read 
+	return arr;//First vector array being returned (from the textfile)
 }//read in from file function
 
 void writeoutfile()
@@ -128,18 +126,17 @@ void writeoutfile()
 
 int main()
 {
-	std::vector<int> arr2;
+	std::vector<int> arr;
 	int userchoice;
 	cout << "How would you like to sort these numbers?\n1.) Bubble.\n2.) Selection.\n3.) Insertion\n4.) Hash\n5.) Binary\n";
 	cin >> userchoice;
 	switch (userchoice)
 	{
 	case 1 ://Bubble
-		textFileRead read;//test
-		arr2 = read.textFileReadDriver();//test
-		_getch();
+		textFileRead read;//Get the values from the textfile
+		arr = read.textFileReadDriver();//Assign the returned values to the vector array
 		bubbleSort sort;
-		sort.bubbleSortDriver(arr2);
+		sort.bubbleSortDriver(arr);//Start the bubble sort passing vector array
 		_getch();
 		break;
 	case 2 ://Selection 
