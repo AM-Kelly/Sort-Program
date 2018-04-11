@@ -65,7 +65,7 @@ public:
 	
 
 private:
-	void heapify(std::vector<int>, int,int);
+	std::vector<int> heapify(std::vector<int>, int,int);
 	std::vector<int> sort(std::vector<int>, int);
 };
 std::vector<int> heapSort::heapSortDriver(std::vector<int> arr)
@@ -75,7 +75,7 @@ std::vector<int> heapSort::heapSortDriver(std::vector<int> arr)
 	sortedArr = sort(arr, x);
 	return sortedArr;
 }
-void heapSort::heapify(std::vector<int> arr, int n, int i)
+std::vector<int> heapSort::heapify(std::vector<int> arr, int n, int i)
 {
 	int largest = i;  // Initialize largest as root
 	int l = 2 * i + 1;  // left = 2*i + 1
@@ -95,14 +95,15 @@ void heapSort::heapify(std::vector<int> arr, int n, int i)
 		swap(arr[i], arr[largest]);
 
 		// Recursively heapify the affected sub-tree
-		heapify(arr, n, largest);
+		arr = heapify(arr, n, largest);
 	}
+	return arr;
 }
 std::vector<int> heapSort::sort(std::vector<int> arr, int n)
 {
 	// Build heap (rearrange array)
 	for (int i = n / 2 - 1; i >= 0; i--)
-		heapify(arr, n, i);
+		arr = heapify(arr, n, i);
 
 	// One by one extract an element from heap
 	for (int i = n - 1; i >= 0; i--)
@@ -111,7 +112,7 @@ std::vector<int> heapSort::sort(std::vector<int> arr, int n)
 		swap(arr[0], arr[i]);
 
 		// call max heapify on the reduced heap
-		heapify(arr, i, 0);
+		arr = heapify(arr, i, 0);//This was the error 
 	}
 	return arr;
 }
@@ -440,6 +441,8 @@ int main()
 		print bPrint;
 		bPrint.printDriver(sortedArr);//Start the print class passing the sorted vector array
 		_getch();
+		cout << "\n";
+		main();
 		break;
 	case 2 ://Selection 
 		selectionSort sSort;
@@ -447,6 +450,8 @@ int main()
 		print sPrint;
 		sPrint.printDriver(sortedArr);
 		_getch();
+		cout << "\n";
+		main();
 		break;
 	case 3://Insertion
 		insertionSort iSort;
@@ -454,6 +459,8 @@ int main()
 		print iPrint;
 		iPrint.printDriver(sortedArr);//Start the print class passing the sorted vector array
 		_getch();
+		cout << "\n";
+		main();
 		break;
 	case 4://Comb Sort
 		combSort cSort;
@@ -461,6 +468,8 @@ int main()
 		print cPrint;
 		cPrint.printDriver(sortedArr);
 		_getch();
+		cout << "\n";
+		main();
 		break;
 	case 5://Heap Sort
 		heapSort hSort;
@@ -468,6 +477,8 @@ int main()
 		printv2 hPrint;
 		hPrint.printv2Driver(sortedArr);
 		_getch();
+		cout << "\n";
+		main();
 		break;
 	default://Error Catch Here!
 		break;
