@@ -9,87 +9,63 @@
 using namespace std;
 
 void writeoutfile();
-//Printv2 
-class printv2
-{
-public:
-	void printv2Driver(std::vector<int>);
-
-private:
-	void printv2Array(std::vector<int>, int);//This prints the sorted array out
-};
-void printv2::printv2Driver(std::vector<int> sortedArr)
-{
-	int x = sortedArr.size();
-	printf("Sorted array: \n");
-	printv2Array(sortedArr, x);//Print the sorted vector array
-}
-void printv2::printv2Array(std::vector<int> sortedArr, int size)
-{
-	int i;
-	for (i = 0; i < size; ++i)
-		cout << sortedArr[i] << " ";
-	cout << "\n";
-		//printf("%d ", sortedArr[i]);
-}
-//Printv2 End
 
 //Print 
 class print
 {
 public:
-	void printDriver(std::vector<int>);
+	void printDriver(vector<int>);//Print driver declaration for controlling the class (also gives public access)
 
 private:
-	void printArray(std::vector<int>, int);//This prints the sorted array out
+	void printArray(vector<int>, int);//This prints the sorted array out
 };
-void print::printDriver(std::vector<int> sortedArr)
+void print::printDriver(vector<int> sortedArr)//This function will control this class
 {
 	int x = sortedArr.size();
 	printf("Sorted array: \n");
 	printArray(sortedArr, x);//Print the sorted vector array
 }
-void print::printArray(std::vector<int> sortedArr, int size)
+void print::printArray(vector<int> sortedArr, int size)
 {
 	int i;
-	for (i = 0; i < size; i++)
-		printf("%d ", sortedArr[i]);
+	for (i = 0; i < size; i++)//Increments through the sorted array, to print each placeholder
+		printf("%d ", sortedArr[i]);//Prints the sorted array to the screen
 }
 //Print End
 
 //Heap Sort
-class heapSort
+class heapSort//This class will sort numbers through a heap sort method
 {
 public:
-	std::vector<int> heapSortDriver(std::vector<int>);
+	vector<int> heapSortDriver(vector<int>);//public accessed driver function
 	
 
 private:
-	std::vector<int> heapify(std::vector<int>, int,int);
-	std::vector<int> sort(std::vector<int>, int);
+	vector<int> heapify(vector<int>, int,int);//Heap function
+	vector<int> sort(vector<int>, int);//Sort function
 };
-std::vector<int> heapSort::heapSortDriver(std::vector<int> arr)
+vector<int> heapSort::heapSortDriver(vector<int> arr)
 {
-	std::vector<int> sortedArr;
-	int x = arr.size();
-	sortedArr = sort(arr, x);
-	return sortedArr;
+	vector<int> sortedArr;
+	int x = arr.size();//getting the size of the passed vector
+	sortedArr = sort(arr, x);//sorting the vector and assigning it to sortedArr
+	return sortedArr;//Returning the sorted vector to the main function
 }
-std::vector<int> heapSort::heapify(std::vector<int> arr, int n, int i)
+vector<int> heapSort::heapify(vector<int> arr, int n, int i)
 {
 	int largest = i;  // Initialize largest as root
-	int l = 2 * i + 1;  // left = 2*i + 1
-	int r = 2 * i + 2;  // right = 2*i + 2
+	int l = 2 * i + 1;  // left = 2*i + 1 - used to divide left 
+	int r = 2 * i + 2;  // right = 2*i + 2 - used to divide right
 
-						// If left child is larger than root
+						// If left side is larger than root
 	if (l < n && arr[l] > arr[largest])
 		largest = l;
 
-	// If right child is larger than largest so far
+	// If right side is larger than largest so far
 	if (r < n && arr[r] > arr[largest])
 		largest = r;
 
-	// If largest is not root
+	// If largest is not equal to root
 	if (largest != i)
 	{
 		swap(arr[i], arr[largest]);
@@ -99,20 +75,20 @@ std::vector<int> heapSort::heapify(std::vector<int> arr, int n, int i)
 	}
 	return arr;
 }
-std::vector<int> heapSort::sort(std::vector<int> arr, int n)
+vector<int> heapSort::sort(vector<int> arr, int n)
 {
-	// Build heap (rearrange array)
+	// Build the heap ( and rearrange array)
 	for (int i = n / 2 - 1; i >= 0; i--)
 		arr = heapify(arr, n, i);
 
-	// One by one extract an element from heap
+	// Incrementally - One by one extract an element from heap
 	for (int i = n - 1; i >= 0; i--)
 	{
-		// Move current root to end
+		// Move current root to the end
 		swap(arr[0], arr[i]);
 
-		// call max heapify on the reduced heap
-		arr = heapify(arr, i, 0);//This was the error 
+		// call the max heapify on the reduced heap
+		arr = heapify(arr, i, 0); 
 	}
 	return arr;
 }
@@ -122,50 +98,47 @@ std::vector<int> heapSort::sort(std::vector<int> arr, int n)
 class combSort
 {
 public:
-	std::vector<int> combSortDriver(std::vector<int>);
+	vector<int> combSortDriver(vector<int>);//publically accessible sort driver function
 	
 
 private:
 	int getNextGap(int);
-	std::vector<int> sort(std::vector<int>, int);
+	vector<int> sort(vector<int>, int);
 };
-std::vector<int> combSort::combSortDriver(std::vector<int> arr)
+vector<int> combSort::combSortDriver(vector<int> arr)
 {
-	std::vector<int> sortedArr;
-	int x = arr.size();
-	sortedArr = sort(arr, x);
-	return sortedArr;
+	vector<int> sortedArr;
+	int x = arr.size();//Getting the size of the vector
+	sortedArr = sort(arr, x);//Starting the sort, passing the unsorted vector
+	return sortedArr;//Returning the sorted vector back to the main function
 }
 int combSort::getNextGap(int gap)
 {
-	// Shrink gap by Shrink factor
+	// shrink gap by the defined shrink factor
 	gap = (gap * 10) / 13;
 
 	if (gap < 1)
 		return 1;
 	return gap;
 }
-std::vector<int> combSort::sort(std::vector<int> arr, int n)
+vector<int> combSort::sort(vector<int> arr, int n)
 {
 	// Initialize gap
 	int gap = n;
 
-	// Initialize swapped as true to make sure that
-	// loop runs
+	// Initialize the swapped as true to ensure the loop runs
 	bool swapped = true;
 
-	// Keep running while gap is more than 1 and last
-	// iteration caused a swap
+	// Keep running while the gap is more greater than 1 and the last iteration caused a swap
 	while (gap != 1 || swapped == true)
 	{
-		// Find next gap
+		// Find next the gap
 		gap = getNextGap(gap);
 
-		// Initialize swapped as false so that we can
-		// check if swap happened or not
+		// Initialize swapped as false so that the record of swap can be checked
 		swapped = false;
 
-		// Compare all elements with current gap
+		// Compare all elements in the array with current gap
 		for (int i = 0; i<n - gap; i++)
 		{
 			if (arr[i] > arr[i + gap])
@@ -182,17 +155,17 @@ std::vector<int> combSort::sort(std::vector<int> arr, int n)
 class quickSort
 {
 public:
-	std::vector<int> quickSortDriver(std::vector<int>);
+	vector<int> quickSortDriver(vector<int>);
 	
 
 private:
 	void swap(int* a, int* b);
-	int partition(std::vector<int>, int, int);
-	std::vector<int> sort(std::vector<int>, int, int);
+	int partition(vector<int>, int, int);
+	vector<int> sort(vector<int>, int, int);
 };
-std::vector<int> quickSort::quickSortDriver(std::vector<int> arr)
+vector<int> quickSort::quickSortDriver(vector<int> arr)
 {
-	std::vector<int> sortedArr;
+	vector<int> sortedArr;
 	int x = arr.size();
 	sortedArr = sort(arr, x);
 	return sortedArr;
@@ -203,7 +176,7 @@ void quickSort::swap(int* a, int* b)
 	*a = *b;
 	*b = t;
 }
-int quickSort::partition(std::vector<int> arr, int low, int high)
+int quickSort::partition(vector<int> arr, int low, int high)
 {
 	int pivot = arr[high];    // pivot
     int i = (low - 1);  // Index of smaller element
@@ -221,7 +194,7 @@ int quickSort::partition(std::vector<int> arr, int low, int high)
     swap(&arr[i + 1], &arr[high]);
     return (i + 1);
 }
-std::vector<int> quickSort::sort(std::vector<int> arr, int low, int high)
+vector<int> quickSort::sort(vector<int> arr, int low, int high)
 {
 	if (low < high)
     {
@@ -241,19 +214,19 @@ std::vector<int> quickSort::sort(std::vector<int> arr, int low, int high)
 class insertionSort
 {
 public:
-	std::vector<int> insertionSortDriver(std::vector<int>);
+	vector<int> insertionSortDriver(vector<int>);//Publically accessible driver function
 
 private:
-	std::vector<int> sort(std::vector<int>, int);
+	vector<int> sort(vector<int>, int);
 };
-std::vector<int> insertionSort::insertionSortDriver(std::vector<int> arr)
+vector<int> insertionSort::insertionSortDriver(vector<int> arr)
 {
-	std::vector<int> sortedArr;
-	int x = arr.size();
-	sortedArr = sort(arr, x);
-	return sortedArr;
+	vector<int> sortedArr;
+	int x = arr.size();//get the size of the vector
+	sortedArr = sort(arr, x);//Starts the sort program, assigning the returned variable to sortedArr
+	return sortedArr;//Returning the sorted vector to the main function
 }
-std::vector<int> insertionSort::sort(std::vector<int> arr, int n)
+vector<int> insertionSort::sort(vector<int> arr, int n)
 {
 	int i, key, j;
 	for (i = 1; i < n; i++)
@@ -261,9 +234,7 @@ std::vector<int> insertionSort::sort(std::vector<int> arr, int n)
 		key = arr[i];
 		j = i - 1;
 
-		/* Move elements of arr[0..i-1], that are
-		greater than key, to one position ahead
-		of their current position */
+		//Move numbers that are greater than the key +1 in the vector
 		while (j >= 0 && arr[j] > key)
 		{
 			arr[j + 1] = arr[j];
@@ -279,38 +250,39 @@ std::vector<int> insertionSort::sort(std::vector<int> arr, int n)
 class selectionSort
 {
 public:
-	std::vector<int> selectionSortDriver(std::vector<int>);
+	vector<int> selectionSortDriver(vector<int>);//Publically accessible function for initialising the selection sort
 private:
-	std::vector<int> sort(std::vector<int>, int);
+	vector<int> sort(vector<int>, int);
 	void swap(int *xp, int *yp);
 };
-std::vector<int> selectionSort::selectionSortDriver(std::vector<int> arr)
+vector<int> selectionSort::selectionSortDriver(vector<int> arr)
 {
-	std::vector<int> sortedArr;
-	int x = arr.size();
-	sortedArr = sort(arr, x);
-	return sortedArr;
+	vector<int> sortedArr;
+	int x = arr.size();//Getting the size of the vector
+	sortedArr = sort(arr, x);//Sorting the vector and assigning it back to sortedArr
+	return sortedArr;//Returning to main function
 }
 void selectionSort::swap(int *xp, int *yp)//Swaps ints around for the sort
 {
+	//This will swap two numbers around
 	int temp = *xp;
 	*xp = *yp;
 	*yp = temp;
 }
-std::vector<int> selectionSort::sort(std::vector<int> arr, int n)
+vector<int> selectionSort::sort(vector<int> arr, int n)
 {
 	int i, j, min_idx;
 
-	// One by one move boundary of unsorted subarray
+	// Incrementally move the boundary of the unsorted subarray to keep track of what has been sorted
 	for (i = 0; i < n - 1; i++)
 	{
-		// Find the minimum element in unsorted array
+		// Find the smallest element in unsorted array
 		min_idx = i;
 		for (j = i + 1; j < n; j++)
 			if (arr[j] < arr[min_idx])
 				min_idx = j;
 
-		// Swap the found minimum element with the first element
+		// Swap the smallest found element with the first element
 		swap(&arr[min_idx], &arr[i]);
 	}
 	return arr;
@@ -321,38 +293,42 @@ std::vector<int> selectionSort::sort(std::vector<int> arr, int n)
 class bubbleSort
 {
 public:
-	std::vector<int> bubbleSortDriver(std::vector<int>);
+	vector<int> bubbleSortDriver(vector<int>);//Publically accesible function for sorting numbers (Bubble)
 
 private:
 	void swap(int *xp, int *yp);//This swaps ints around for the sort
-	std::vector<int> sort(std::vector<int>, int);//This sorts the ints
+	vector<int> sort(vector<int>, int);//This sorts the ints
 };
-std::vector<int> bubbleSort::bubbleSortDriver(std::vector<int> arr)//Driver
+vector<int> bubbleSort::bubbleSortDriver(vector<int> arr)//Driver
 {
 std:vector<int> sortedArr;//Declare a new vector array for holding the sorted data
 	int x = arr.size();//get the size of the passed vector array
-	sortedArr = sort(arr, x);//Sort using the passed vector array
-	return sortedArr;
-	_getch();
+	sortedArr = sort(arr, x);//Sort using the passed vector array and return back to sortedArr
+	return sortedArr;//Return the sortedArr to the main function
 }
 void bubbleSort::swap(int *xp, int *yp)//Swaps ints around for the sort
 {
+	//this will swap two numbers around
 	int temp = *xp;
 	*xp = *yp;
 	*yp = temp;
 }
-std::vector<int> bubbleSort::sort(std::vector<int> arr, int n)// An optimized version of Bubble Sort
+vector<int> bubbleSort::sort(vector<int> arr, int n)// An optimized version of Bubble Sort
 {
 	int i, j;
 	bool swapped;
 	for (i = 0; i < n - 1; i++)
 	{
+		//Start with swapped set to false
 		swapped = false;
 		for (j = 0; j < n - i - 1; j++)
 		{
+			//Determine whether it should be swapped
 			if (arr[j] > arr[j + 1])
 			{
+				//Swap
 				swap(&arr[j], &arr[j + 1]);
+				//Change swapped to true
 				swapped = true;
 			}
 		}
@@ -369,17 +345,17 @@ std::vector<int> bubbleSort::sort(std::vector<int> arr, int n)// An optimized ve
 class textFileRead//Change the void --> Ints. Passing values back up through.
 {
 public:
-	std::vector<int> textFileReadDriver();//Driver function declaration
+	vector<int> textFileReadDriver();//Driver function declaration
 
 private:
-	std::vector<int> readIn();//Read in from file function declaration
+	vector<int> readIn();//Read in from file function declaration
 };
-std::vector<int> textFileRead::textFileReadDriver()//Driver function //To be called
+vector<int> textFileRead::textFileReadDriver()//Driver function //To be called
 {
-	std::vector<int> arr =	readIn();//Start the readIn function (private)
+	vector<int> arr =	readIn();//Start the readIn function (private)
 	return arr;//second vector array being returned (from the textfile --> main)
 }
-std::vector<int> textFileRead::readIn()
+vector<int> textFileRead::readIn()
 {
 	ifstream thefile1("numbers.txt");//Textfile declaration
 	thefile1.unsetf(std::ios_base::skipws);//Skip new lines
@@ -391,7 +367,7 @@ std::vector<int> textFileRead::readIn()
 	cout << "There are " << line_count + 1 << " numbers to sort.\n";//Print out the number of lines starting from 0
 
 
-	std::vector<int> arr(line_count + 1);//+1 To get to the right number
+	vector<int> arr(line_count + 1);//+1 To get to the right number
 
 	string line;//declare line 
 	ifstream thefile("numbers.txt");//Declare the txt file to read in from
@@ -400,10 +376,11 @@ std::vector<int> textFileRead::readIn()
 		int i = 0;//Counter set to zero
 		while (getline(thefile, line))
 		{
-			//a[i] = atoi(line.c_str());//put the conversion of line into --> a[i]
 			arr[i] = atoi(line.c_str());//put the conversion of line into --> a[i]
+			//CHECKS 
 			//cout << line << '\n';//Print out the line as a check
 			//cout << arr[i] << '\n';//Print out the vector as a check
+			//CHECKS
 			i++;//increment the counter
 		}
 		thefile.close();//Close the file
@@ -413,7 +390,7 @@ std::vector<int> textFileRead::readIn()
 }//read in from file function
 //TextFileReadEnd
 
-void writeoutfile()
+void writeoutfile()//This could be used to output the vector to a file
 {
 	ofstream thefile;
 	thefile.open("example.txt");//INPUT THE FILE DIR
@@ -424,15 +401,21 @@ void writeoutfile()
 
 int main()
 {
-	std::vector<int> arr;//Unsorted
-	std::vector<int> sortedArr;//Sorted
+	vector<int> arr;//Unsorted
+	vector<int> sortedArr;//Sorted
 
 	textFileRead read;//Could put an if statement around this to stop loading arr all the time?
 	arr = read.textFileReadDriver();//Get the unsorted values from the textfile & assign them to the vector array
 
-	int userchoice;
+	int userchoice = 0;
 	cout << "How would you like to sort these numbers?\n1.) Bubble.\n2.) Selection.\n3.) Insertion\n4.) Comb\n5.) Heap\n";
-	cin >> userchoice;
+	
+	while (!(cin >> userchoice) && userchoice < 1 || userchoice > 5)
+	{
+		cout << "Invalid selection (Choice must be between 1 - 5)\n";
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	}
 	switch (userchoice)
 	{
 	case 1 ://Bubble
@@ -441,7 +424,7 @@ int main()
 		print bPrint;
 		bPrint.printDriver(sortedArr);//Start the print class passing the sorted vector array
 		_getch();
-		cout << "\n";
+		cout << "\n";//New line
 		main();
 		break;
 	case 2 ://Selection 
@@ -450,7 +433,7 @@ int main()
 		print sPrint;
 		sPrint.printDriver(sortedArr);
 		_getch();
-		cout << "\n";
+		cout << "\n";//New line
 		main();
 		break;
 	case 3://Insertion
@@ -459,7 +442,7 @@ int main()
 		print iPrint;
 		iPrint.printDriver(sortedArr);//Start the print class passing the sorted vector array
 		_getch();
-		cout << "\n";
+		cout << "\n";//New line
 		main();
 		break;
 	case 4://Comb Sort
@@ -468,16 +451,16 @@ int main()
 		print cPrint;
 		cPrint.printDriver(sortedArr);
 		_getch();
-		cout << "\n";
+		cout << "\n";//New line
 		main();
 		break;
 	case 5://Heap Sort
 		heapSort hSort;
 		sortedArr = hSort.heapSortDriver(arr);
-		printv2 hPrint;
-		hPrint.printv2Driver(sortedArr);
+		print hPrint;
+		hPrint.printDriver(sortedArr);
 		_getch();
-		cout << "\n";
+		cout << "\n";//New line
 		main();
 		break;
 	default://Error Catch Here!
