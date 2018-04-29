@@ -6,6 +6,8 @@
 #include <iterator>
 #include <vector>
 #include <math.h>
+#include <ctime>
+clock_t clockStart;
 using namespace std;
 
 void writeoutfile();
@@ -21,13 +23,13 @@ private:
 };
 void print::printDriver(vector<int> sortedArr)//This function will control this class
 {
-	int x = sortedArr.size();
-	printf("Sorted array: \n");
+	int x = sortedArr.size();//get array size
+	printf("Sorted array: \n");//output
 	printArray(sortedArr, x);//Print the sorted vector array
 }
 void print::printArray(vector<int> sortedArr, int size)
 {
-	int i;
+	int i;//dec
 	for (i = 0; i < size; i++)//Increments through the sorted array, to print each placeholder
 		printf("%d ", sortedArr[i]);//Prints the sorted array to the screen
 }
@@ -46,7 +48,7 @@ private:
 };
 vector<int> heapSort::heapSortDriver(vector<int> arr)
 {
-	vector<int> sortedArr;
+	vector<int> sortedArr;//dec
 	int x = arr.size();//getting the size of the passed vector
 	sortedArr = sort(arr, x);//sorting the vector and assigning it to sortedArr
 	return sortedArr;//Returning the sorted vector to the main function
@@ -57,18 +59,15 @@ vector<int> heapSort::heapify(vector<int> arr, int n, int i)
 	int l = 2 * i + 1;  // left = 2*i + 1 - used to divide left 
 	int r = 2 * i + 2;  // right = 2*i + 2 - used to divide right
 
-						// If left side is larger than root
-	if (l < n && arr[l] > arr[largest])
-		largest = l;
+	if (l < n && arr[l] > arr[largest])// If left side is larger than root
+		largest = l;//assignment
 
-	// If right side is larger than largest so far
-	if (r < n && arr[r] > arr[largest])
-		largest = r;
+	if (r < n && arr[r] > arr[largest])// If right side is larger than the largest in process
+		largest = r;//assignment
 
-	// If largest is not equal to root
-	if (largest != i)
+	if (largest != i)// If largest is not equal to root
 	{
-		swap(arr[i], arr[largest]);
+		swap(arr[i], arr[largest]);//start swap around largest
 
 		// Recursively heapify the affected sub-tree
 		arr = heapify(arr, n, largest);
@@ -102,20 +101,19 @@ public:
 	
 
 private:
-	int getNextGap(int);
-	vector<int> sort(vector<int>, int);
+	int getNextGap(int);//Finds next gap 
+	vector<int> sort(vector<int>, int);//sort function
 };
 vector<int> combSort::combSortDriver(vector<int> arr)
 {
-	vector<int> sortedArr;
+	vector<int> sortedArr;//dec
 	int x = arr.size();//Getting the size of the vector
 	sortedArr = sort(arr, x);//Starting the sort, passing the unsorted vector
 	return sortedArr;//Returning the sorted vector back to the main function
 }
 int combSort::getNextGap(int gap)
 {
-	// shrink gap by the defined shrink factor
-	gap = (gap * 10) / 13;
+	gap = (gap * 10) / 13; // shrink gap by factor given
 
 	if (gap < 1)
 		return 1;
@@ -123,23 +121,16 @@ int combSort::getNextGap(int gap)
 }
 vector<int> combSort::sort(vector<int> arr, int n)
 {
-	// Initialize gap
-	int gap = n;
+	int gap = n;//dec and initalisation
+	bool swapped = true;// dec and initialise the variable as true to make sure the loop runs
 
-	// Initialize the swapped as true to ensure the loop runs
-	bool swapped = true;
-
-	// Keep running while the gap is more greater than 1 and the last iteration caused a swap
-	while (gap != 1 || swapped == true)
+	
+	while (gap != 1 || swapped == true)//Keep running while the gap does not equal and 1 and/or swapped equals true
 	{
-		// Find next the gap
-		gap = getNextGap(gap);
+		gap = getNextGap(gap);// location the next gap
+		swapped = false;// Set swap to false so that swap can be tracked and checked against
 
-		// Initialize swapped as false so that the record of swap can be checked
-		swapped = false;
-
-		// Compare all elements in the array with current gap
-		for (int i = 0; i<n - gap; i++)
+		for (int i = 0; i<n - gap; i++)// Compare all elements in the array with gap
 		{
 			if (arr[i] > arr[i + gap])
 			{
@@ -151,65 +142,7 @@ vector<int> combSort::sort(vector<int> arr, int n)
 	return arr;
 }
 //Comb Sort End
-/*//Quick Sort
-class quickSort
-{
-public:
-	vector<int> quickSortDriver(vector<int>);
-	
 
-private:
-	void swap(int* a, int* b);
-	int partition(vector<int>, int, int);
-	vector<int> sort(vector<int>, int, int);
-};
-vector<int> quickSort::quickSortDriver(vector<int> arr)
-{
-	vector<int> sortedArr;
-	int x = arr.size();
-	sortedArr = sort(arr, x);
-	return sortedArr;
-}
-void quickSort::swap(int* a, int* b)
-{
-	int t = *a;
-	*a = *b;
-	*b = t;
-}
-int quickSort::partition(vector<int> arr, int low, int high)
-{
-	int pivot = arr[high];    // pivot
-    int i = (low - 1);  // Index of smaller element
- 
-    for (int j = low; j <= high- 1; j++)
-    {
-        // If current element is smaller than or
-        // equal to pivot
-        if (arr[j] <= pivot)
-        {
-            i++;    // increment index of smaller element
-            swap(&arr[i], &arr[j]);
-        }
-    }
-    swap(&arr[i + 1], &arr[high]);
-    return (i + 1);
-}
-vector<int> quickSort::sort(vector<int> arr, int low, int high)
-{
-	if (low < high)
-    {
-        /* pi is partitioning index, arr[p] is now
-           //at right place
-        int pi = partition(arr, low, high);
- 
-        // Separately sort elements before
-        // partition and after partition
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
-    }
-	return arr;
-}
-*/
 //Insertion
 class insertionSort
 {
@@ -217,25 +150,24 @@ public:
 	vector<int> insertionSortDriver(vector<int>);//Publically accessible driver function
 
 private:
-	vector<int> sort(vector<int>, int);
+	vector<int> sort(vector<int>, int);//sort function
 };
 vector<int> insertionSort::insertionSortDriver(vector<int> arr)
 {
-	vector<int> sortedArr;
+	vector<int> sortedArr;//dec
 	int x = arr.size();//get the size of the vector
 	sortedArr = sort(arr, x);//Starts the sort program, assigning the returned variable to sortedArr
 	return sortedArr;//Returning the sorted vector to the main function
 }
 vector<int> insertionSort::sort(vector<int> arr, int n)
 {
-	int i, key, j;
-	for (i = 1; i < n; i++)
+	int i, key, j;//dec
+	for (i = 1; i < n; i++)//
 	{
-		key = arr[i];
-		j = i - 1;
+		key = arr[i];//assign arr to key
+		j = i - 1;//decrement n assign to j
 
-		//Move numbers that are greater than the key +1 in the vector
-		while (j >= 0 && arr[j] > key)
+		while (j >= 0 && arr[j] > key)//swap around the numbers that are bigger than the key by 1 (in the vector)
 		{
 			arr[j + 1] = arr[j];
 			j = j - 1;
@@ -252,38 +184,35 @@ class selectionSort
 public:
 	vector<int> selectionSortDriver(vector<int>);//Publically accessible function for initialising the selection sort
 private:
-	vector<int> sort(vector<int>, int);
-	void swap(int *xp, int *yp);
+	vector<int> sort(vector<int>, int);//sort function
+	void swap(int *xp, int *yp);//swap function
 };
 vector<int> selectionSort::selectionSortDriver(vector<int> arr)
 {
-	vector<int> sortedArr;
+	vector<int> sortedArr;//dec
 	int x = arr.size();//Getting the size of the vector
 	sortedArr = sort(arr, x);//Sorting the vector and assigning it back to sortedArr
 	return sortedArr;//Returning to main function
 }
-void selectionSort::swap(int *xp, int *yp)//Swaps ints around for the sort
+void selectionSort::swap(int *iz, int *jz)//Swaps ints around for the sort
 {
 	//This will swap two numbers around
-	int temp = *xp;
-	*xp = *yp;
-	*yp = temp;
+	int temp = *iz;
+	*iz = *jz;
+	*jz = temp;
 }
 vector<int> selectionSort::sort(vector<int> arr, int n)
 {
-	int i, j, min_idx;
+	int i, j, min_idx;//dec
 
-	// Incrementally move the boundary of the unsorted subarray to keep track of what has been sorted
-	for (i = 0; i < n - 1; i++)
+	for (i = 0; i < n - 1; i++)// increment the boundary of the unsorted vector so tracking can be performed
 	{
-		// Find the smallest element in unsorted array
-		min_idx = i;
+		min_idx = i;// Find the smallest number in unsorted vector
 		for (j = i + 1; j < n; j++)
 			if (arr[j] < arr[min_idx])
 				min_idx = j;
 
-		// Swap the smallest found element with the first element
-		swap(&arr[min_idx], &arr[i]);
+		swap(&arr[min_idx], &arr[i]);// Swap the smallest found number with the first element
 	}
 	return arr;
 }
@@ -306,35 +235,28 @@ std:vector<int> sortedArr;//Declare a new vector array for holding the sorted da
 	sortedArr = sort(arr, x);//Sort using the passed vector array and return back to sortedArr
 	return sortedArr;//Return the sortedArr to the main function
 }
-void bubbleSort::swap(int *xp, int *yp)//Swaps ints around for the sort
+void bubbleSort::swap(int *iz, int *jz)//Swaps ints around for the sort
 {
-	//this will swap two numbers around
-	int temp = *xp;
-	*xp = *yp;
-	*yp = temp;
+	int temp = *iz;	//this will swap two numbers around
+	*iz = *jz;
+	*jz = temp;
 }
 vector<int> bubbleSort::sort(vector<int> arr, int n)// An optimized version of Bubble Sort
 {
-	int i, j;
-	bool swapped;
+	int i, j;//dec
+	bool swapped;//tracking boolean for swap
 	for (i = 0; i < n - 1; i++)
 	{
-		//Start with swapped set to false
-		swapped = false;
+		swapped = false;//Start with swapped set to false
 		for (j = 0; j < n - i - 1; j++)
 		{
-			//Determine whether it should be swapped
-			if (arr[j] > arr[j + 1])
+			if (arr[j] > arr[j + 1])//Determine whether it should be swapped
 			{
-				//Swap
-				swap(&arr[j], &arr[j + 1]);
-				//Change swapped to true
-				swapped = true;
+				swap(&arr[j], &arr[j + 1]);//Swap
+				swapped = true;//Change swapped to true
 			}
 		}
-
-		// IF no two elements were swapped by inner loop, then break
-		if (swapped == false)
+		if (swapped == false)// IF no two elements were swapped by inner loop, then break
 			break;
 	}
 	return arr;
@@ -407,63 +329,73 @@ int main()
 	textFileRead read;//Could put an if statement around this to stop loading arr all the time?
 	arr = read.textFileReadDriver();//Get the unsorted values from the textfile & assign them to the vector array
 
-	int userchoice = 0;
-	cout << "How would you like to sort these numbers?\n1.) Bubble.\n2.) Selection.\n3.) Insertion\n4.) Comb\n5.) Heap\n";
+	int userchoice = 0;//dec and assignment
+	cout << "How would you like to sort these numbers?\n1.) Bubble.\n2.) Selection.\n3.) Insertion\n4.) Comb\n5.) Heap\n";//output
 	
-	while (!(cin >> userchoice) && userchoice < 1 || userchoice > 5)
+	while (!(cin >> userchoice) || userchoice < 1 || userchoice > 5)//error check
 	{
-		cout << "Invalid selection (Choice must be between 1 - 5)\n";
-		cin.clear();
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "Invalid selection (Choice must be between 1 - 5)\n";//output
+		cin.clear();//clear
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');//check
 	}
-	switch (userchoice)
+	switch (userchoice)//switch about userchoice
 	{
 	case 1 ://Bubble
-		bubbleSort bSort;
+		bubbleSort bSort;//class dec
+		clockStart = clock();//Start clock
 		sortedArr = bSort.bubbleSortDriver(arr);//Start the bubble sort passing unsorted vector array
-		print bPrint;
+		print bPrint;//class dec
 		bPrint.printDriver(sortedArr);//Start the print class passing the sorted vector array
+		cout << "\nThis sort took " << ((clock() - clockStart) / (double)CLOCKS_PER_SEC) << " seconds\n";//output time
 		_getch();
 		cout << "\n";//New line
 		main();
 		break;
 	case 2 ://Selection 
-		selectionSort sSort;
-		sortedArr = sSort.selectionSortDriver(arr);
-		print sPrint;
-		sPrint.printDriver(sortedArr);
+		selectionSort sSort;//class dec
+		clockStart = clock();//Start clock
+		sortedArr = sSort.selectionSortDriver(arr);//start class
+		print sPrint;//class dec
+		sPrint.printDriver(sortedArr);//start class
+		cout << "\nThis sort took " << ((clock() - clockStart) / (double)CLOCKS_PER_SEC) << " seconds\n";//output time
 		_getch();
 		cout << "\n";//New line
 		main();
 		break;
 	case 3://Insertion
-		insertionSort iSort;
+		insertionSort iSort;//class dec
+		clockStart = clock();//Start clock
 		sortedArr = iSort.insertionSortDriver(arr);//Start the insertion sort passing unsorted vector array
-		print iPrint;
+		print iPrint;//class dec
 		iPrint.printDriver(sortedArr);//Start the print class passing the sorted vector array
+		cout << "\nThis sort took " << ((clock() - clockStart) / (double)CLOCKS_PER_SEC) << " seconds\n";//output time
 		_getch();
 		cout << "\n";//New line
 		main();
 		break;
 	case 4://Comb Sort
-		combSort cSort;
-		sortedArr = cSort.combSortDriver(arr);
-		print cPrint;
-		cPrint.printDriver(sortedArr);
+		combSort cSort;//class dec
+		clockStart = clock();//Start clock
+		sortedArr = cSort.combSortDriver(arr);//class start
+		print cPrint;//class dec
+		cPrint.printDriver(sortedArr);//class start
+		cout << "\nThis sort took " << ((clock() - clockStart) / (double)CLOCKS_PER_SEC) << " seconds\n";//time stop and output time
 		_getch();
 		cout << "\n";//New line
 		main();
 		break;
 	case 5://Heap Sort
-		heapSort hSort;
-		sortedArr = hSort.heapSortDriver(arr);
-		print hPrint;
-		hPrint.printDriver(sortedArr);
+		heapSort hSort;//class dec
+		clockStart = clock();//Start clock
+		sortedArr = hSort.heapSortDriver(arr);//class start
+		print hPrint;//class dec
+		hPrint.printDriver(sortedArr);//class start
+		cout << "\nThis sort took " << ((clock() - clockStart) / (double)CLOCKS_PER_SEC) << " seconds\n";//time stop and output time
 		_getch();
 		cout << "\n";//New line
 		main();
 		break;
-	default://Error Catch Here!
+	default:
 		break;
 	}
 	return 0;
